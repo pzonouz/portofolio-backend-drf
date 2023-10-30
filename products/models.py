@@ -19,7 +19,6 @@ class Product(models.Model):
     categoryLevel3 = models.ForeignKey(
         "ProductCategoryLevel3", on_delete=models.PROTECT, related_name="products"
     )
-    descriptions = models.ManyToManyField("Description")
     brand = models.ForeignKey(
         Brand, on_delete=models.SET_NULL, null=True, related_name="products"
     )
@@ -30,7 +29,7 @@ class Product(models.Model):
 
 class Description(models.Model):
     field = models.TextField()
-    products = models.ManyToManyField(Product)
+    products = models.ManyToManyField(Product, related_name="descriptions")
 
     def __str__(self) -> str:
         return self.field
