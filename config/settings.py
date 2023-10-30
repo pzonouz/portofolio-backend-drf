@@ -135,3 +135,7 @@ MEDIA_URL = "media/"
 MEDIA_ROOT = "media/"
 ALLOWED_HOSTS = ["*"]
 CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "http://192.168.1.103:3000",
+# ]

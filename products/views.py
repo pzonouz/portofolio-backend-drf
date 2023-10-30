@@ -3,11 +3,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .serializers import (
+    BrandSerializer,
     ProductCategoryLevel1Serializer,
     ProductCategoryLevel2Serializer,
     ProductSerializer,
 )
-from .models import Product, ProductCategoryLevel1, ProductCategoryLevel2
+from .models import Brand, Product, ProductCategoryLevel1, ProductCategoryLevel2
 
 
 class ProductsView(ListAPIView, RetrieveAPIView):
@@ -24,3 +25,8 @@ class ProductView(RetrieveAPIView):
 class ProductCategoryLevel1View(ListAPIView):
     queryset = ProductCategoryLevel1.objects.all()
     serializer_class = ProductCategoryLevel1Serializer
+
+
+class BrandsView(ListAPIView):
+    queryset = Brand.objects.all()
+    serializer_class = BrandSerializer

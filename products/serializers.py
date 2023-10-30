@@ -1,6 +1,8 @@
 from rest_framework import serializers
 
 from .models import (
+    Brand,
+    Description,
     Product,
     ProductCategoryLevel1,
     ProductCategoryLevel2,
@@ -8,8 +10,14 @@ from .models import (
 )
 
 
+class DescriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Description
+        fields = "__all__"
+
+
 class ProductSerializer(serializers.ModelSerializer):
-    # categoryLevel3 = serializers.StringRelatedField()
+    descriptions = DescriptionSerializer(many=True)
 
     class Meta:
         model = Product
@@ -38,3 +46,9 @@ class ProductCategoryLevel1Serializer(serializers.ModelSerializer):
     class Meta:
         model = ProductCategoryLevel1
         fields = ["id", "name", "children"]
+
+
+class BrandSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Brand
+        fields = "__all__"

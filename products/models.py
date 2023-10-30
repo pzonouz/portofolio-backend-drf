@@ -1,12 +1,27 @@
 from django.db import models
 
 
+class Brand(models.Model):
+    name = models.CharField(max_length=255)
+    slug = models.CharField(max_length=255)
+    preamble = models.TextField(null=True, blank=True)
+    image = models.ImageField()
+
+    def __str__(self) -> str:
+        return self.name
+
+
 class Product(models.Model):
     name = models.CharField(max_length=256)
     image = models.ImageField()
-    slug = models.CharField(max_length=255, null=True)
+    slug = models.CharField(max_length=255, null=True, unique=True)
+    preamble = models.TextField()
     categoryLevel3 = models.ForeignKey(
         "ProductCategoryLevel3", on_delete=models.PROTECT, related_name="products"
+    )
+    descriptions = models.ManyToManyField("Description")
+    brand = models.ForeignKey(
+        Brand, on_delete=models.SET_NULL, null=True, related_name="products"
     )
 
     def __str__(self) -> str:
@@ -15,7 +30,7 @@ class Product(models.Model):
 
 class Description(models.Model):
     field = models.TextField()
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    products = models.ManyToManyField(Product)
 
     def __str__(self) -> str:
         return self.field

@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import (
+    Brand,
     Product,
     Description,
     ProductCategoryLevel1,
@@ -43,4 +44,9 @@ class ProductCategoryL2Admin(admin.ModelAdmin):
 
 @admin.register(ProductCategoryLevel3)
 class ProductCategoryL3Admin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Brand)
+class BrandAdmin(admin.ModelAdmin):
     pass
