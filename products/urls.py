@@ -1,6 +1,7 @@
 from .views import (
     BrandView,
     BrandsView,
+    CarouselView,
     Level1View,
     Level2View,
     Level3View,
@@ -28,4 +29,5 @@ urlpatterns = [
     path("brands/", BrandsView.as_view()),
     path("brand/<pk>/", BrandView.as_view()),
     path("by_brand/<id>/", ProductsByBrandView.as_view()),
+    path("carousel/", CarouselView.as_view()),
 ]

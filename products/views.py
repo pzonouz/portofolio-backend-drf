@@ -4,6 +4,7 @@ from rest_framework.response import Response
 
 from .serializers import (
     BrandSerializer,
+    CarouselSerializer,
     ProductCategoryLevel1Serializer,
     ProductCategoryLevel2Serializer,
     ProductCategoryLevel3Serializer,
@@ -13,6 +14,7 @@ from .serializers import (
 )
 from .models import (
     Brand,
+    Carousel,
     Product,
     ProductCategoryLevel1,
     ProductCategoryLevel2,
@@ -88,3 +90,8 @@ class ProductsByBrandView(ListAPIView):
 
     def get_queryset(self):
         return Product.objects.filter(brand__id=self.kwargs["id"])
+
+
+class CarouselView(ListAPIView):
+    queryset = Carousel.objects.all()
+    serializer_class = CarouselSerializer

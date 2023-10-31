@@ -79,3 +79,13 @@ class ProductCategoryLevel3(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+
+class Carousel(models.Model):
+    description = models.TextField(null=True, blank=True)
+    title = models.CharField(null=True, max_length=256, blank=True)
+    image = models.ImageField()
+    name = models.CharField(max_length=256, null=True)
+
+    def __str__(self):
+        return self.name
