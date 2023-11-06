@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import (
+    Banner,
     Brand,
     Carousel,
     Description,
@@ -64,4 +65,18 @@ class BrandSerializer(serializers.ModelSerializer):
 class CarouselSerializer(serializers.ModelSerializer):
     class Meta:
         model = Carousel
+        fields = "__all__"
+
+
+class ProductCategoryLevel1ForBannerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductCategoryLevel1
+        fields = ["name", "image"]
+
+
+class BannersSerializer(serializers.ModelSerializer):
+    product_level_1s = ProductCategoryLevel1ForBannerSerializer(many=True)
+
+    class Meta:
+        model = Banner
         fields = "__all__"

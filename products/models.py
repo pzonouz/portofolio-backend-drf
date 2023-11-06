@@ -5,7 +5,8 @@ class Brand(models.Model):
     name = models.CharField(max_length=255)
     slug = models.CharField(max_length=255)
     preamble = models.TextField(null=True, blank=True)
-    image = models.ImageField()
+    image_large = models.ImageField()
+    image_small = models.ImageField(null=True)
 
     def __str__(self) -> str:
         return self.name
@@ -53,7 +54,12 @@ class Review(models.Model):
 
 class ProductCategoryLevel1(models.Model):
     name = models.CharField(max_length=255)
+    description = models.TextField(null=True)
+    image = models.ImageField(null=True)
     slug = models.CharField(max_length=255)
+    banner = models.ForeignKey(
+        "Banner", on_delete=models.SET_NULL, null=True, related_name="product_level_1s"
+    )
 
     def __str__(self) -> str:
         return self.name
@@ -61,6 +67,7 @@ class ProductCategoryLevel1(models.Model):
 
 class ProductCategoryLevel2(models.Model):
     name = models.CharField(max_length=255)
+    description = models.TextField(null=True)
     slug = models.CharField(max_length=255)
     parent = models.ForeignKey(
         ProductCategoryLevel1, on_delete=models.PROTECT, related_name="children"
@@ -72,6 +79,7 @@ class ProductCategoryLevel2(models.Model):
 
 class ProductCategoryLevel3(models.Model):
     name = models.CharField(max_length=255)
+    description = models.TextField(null=True)
     slug = models.CharField(max_length=255)
     parent = models.ForeignKey(
         ProductCategoryLevel2, on_delete=models.PROTECT, related_name="children"
@@ -88,4 +96,11 @@ class Carousel(models.Model):
     name = models.CharField(max_length=256, null=True)
 
     def __str__(self):
+        return self.name
+
+
+class Banner(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self) -> str:
         return self.name

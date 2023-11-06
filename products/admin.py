@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import (
+    Banner,
     Brand,
     Carousel,
     Product,
@@ -55,4 +56,9 @@ class BrandAdmin(admin.ModelAdmin):
 
 @admin.register(Carousel)
 class CarouselAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Banner)
+class BannersAdmin(admin.ModelAdmin):
     pass

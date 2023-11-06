@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .serializers import (
+    BannersSerializer,
     BrandSerializer,
     CarouselSerializer,
     ProductCategoryLevel1Serializer,
@@ -13,6 +14,7 @@ from .serializers import (
     ProductsSimpleSerializer,
 )
 from .models import (
+    Banner,
     Brand,
     Carousel,
     Product,
@@ -95,3 +97,8 @@ class ProductsByBrandView(ListAPIView):
 class CarouselView(ListAPIView):
     queryset = Carousel.objects.all()
     serializer_class = CarouselSerializer
+
+
+class BannersView(ListAPIView):
+    queryset = Banner.objects.all()
+    serializer_class = BannersSerializer

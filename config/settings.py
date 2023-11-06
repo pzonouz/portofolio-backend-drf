@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     "corsheaders",
     "debug_toolbar",
     "products",
+    "projects",
+    "customers",
+    "events",
 ]
 
 MIDDLEWARE = [

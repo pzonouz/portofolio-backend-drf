@@ -1,4 +1,5 @@
 from .views import (
+    BannersView,
     BrandView,
     BrandsView,
     CarouselView,
@@ -30,4 +31,5 @@ urlpatterns = [
     path("brand/<pk>/", BrandView.as_view()),
     path("by_brand/<id>/", ProductsByBrandView.as_view()),
     path("carousel/", CarouselView.as_view()),
+    path("banners/", BannersView.as_view()),
 ]
