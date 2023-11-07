@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from .models import (
-    Banner,
     Brand,
     Carousel,
     Description,
@@ -37,7 +36,7 @@ class ProductCategoryLevel3Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductCategoryLevel3
-        fields = ["id", "name", "products"]
+        fields = ["id", "name", "productType", "products"]
 
 
 class ProductCategoryLevel2Serializer(serializers.ModelSerializer):
@@ -45,7 +44,7 @@ class ProductCategoryLevel2Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductCategoryLevel2
-        fields = ["id", "name", "children"]
+        fields = ["id", "name", "productType", "children"]
 
 
 class ProductCategoryLevel1Serializer(serializers.ModelSerializer):
@@ -53,7 +52,7 @@ class ProductCategoryLevel1Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductCategoryLevel1
-        fields = ["id", "name", "children"]
+        fields = ["id", "name", "productType", "children"]
 
 
 class BrandSerializer(serializers.ModelSerializer):
@@ -64,19 +63,11 @@ class BrandSerializer(serializers.ModelSerializer):
 
 class CarouselSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Carousel
-        fields = "__all__"
-
-
-class ProductCategoryLevel1ForBannerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProductCategoryLevel1
-        fields = ["name", "image"]
+        model = Product
+        fields = ["id", "name", "image"]
 
 
 class BannersSerializer(serializers.ModelSerializer):
-    product_level_1s = ProductCategoryLevel1ForBannerSerializer(many=True)
-
     class Meta:
-        model = Banner
-        fields = "__all__"
+        model = ProductCategoryLevel1
+        fields = ["id", "name", "image"]

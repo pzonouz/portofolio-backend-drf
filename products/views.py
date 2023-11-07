@@ -14,7 +14,6 @@ from .serializers import (
     ProductsSimpleSerializer,
 )
 from .models import (
-    Banner,
     Brand,
     Carousel,
     Product,
@@ -24,7 +23,7 @@ from .models import (
 )
 
 
-class ProductsView(ListAPIView, RetrieveAPIView):
+class ProductsView(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductsSimpleSerializer
 
@@ -72,8 +71,18 @@ class Level1View(RetrieveAPIView):
     queryset = ProductCategoryLevel1.objects.all()
 
 
-class ProductCategoryLevel1View(ListAPIView):
-    queryset = ProductCategoryLevel1.objects.all()
+class PartCategoryLevel1View(ListAPIView):
+    queryset = ProductCategoryLevel1.objects.filter(productType="Pt")
+    serializer_class = ProductCategoryLevel1Serializer
+
+
+class ClassCategoryLevel1View(ListAPIView):
+    queryset = ProductCategoryLevel1.objects.filter(productType="Cl")
+    serializer_class = ProductCategoryLevel1Serializer
+
+
+class ServiceCategoryLevel1View(ListAPIView):
+    queryset = ProductCategoryLevel1.objects.filter(productType="Sr")
     serializer_class = ProductCategoryLevel1Serializer
 
 
@@ -95,10 +104,10 @@ class ProductsByBrandView(ListAPIView):
 
 
 class CarouselView(ListAPIView):
-    queryset = Carousel.objects.all()
+    queryset = Product.objects.filter(carousel=True)
     serializer_class = CarouselSerializer
 
 
 class BannersView(ListAPIView):
-    queryset = Banner.objects.all()
+    queryset = ProductCategoryLevel1.objects.filter(banner=True)
     serializer_class = BannersSerializer
