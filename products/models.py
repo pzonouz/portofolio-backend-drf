@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Brand(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     preamble = models.TextField(null=True, blank=True)
     image_large = models.ImageField()
     image_small = models.ImageField(null=True)
@@ -19,11 +19,11 @@ PRODUCT_TYPE = [(PART, "PART"), (SERVICE, "SERVICE"), (CLASS, "CLASS")]
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=256)
-    image = models.ImageField()
+    name = models.CharField(max_length=256, unique=True)
     preamble = models.TextField()
     carousel = models.BooleanField(default=False)
     productType = models.CharField(max_length=255, choices=PRODUCT_TYPE, default=PART)
+    image = models.ImageField(null=True, blank=True)
     categoryLevel3 = models.ForeignKey(
         "ProductCategoryLevel3", on_delete=models.PROTECT, related_name="products"
     )
@@ -35,8 +35,30 @@ class Product(models.Model):
         return self.name
 
 
+class ProductImage(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    image = models.ImageField()
+    product = models.ForeignKey(
+        Product, on_delete=models.PROTECT, related_name="images"
+    )
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class ProductVideo(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    video = models.FileField(max_length=255)
+    product = models.ForeignKey(
+        Product, on_delete=models.PROTECT, related_name="videos"
+    )
+
+    def __str__(self) -> str:
+        return self.name
+
+
 class Description(models.Model):
-    field = models.TextField()
+    field = models.TextField(unique=True)
     products = models.ManyToManyField(Product, related_name="descriptions")
 
     def __str__(self) -> str:
@@ -44,7 +66,7 @@ class Description(models.Model):
 
 
 class Specification(models.Model):
-    field = models.TextField()
+    field = models.TextField(unique=True)
     Product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
@@ -52,7 +74,7 @@ class Specification(models.Model):
 
 
 class Review(models.Model):
-    field = models.TextField()
+    field = models.TextField(unique=True)
     rating = models.IntegerField()
 
     def __str__(self) -> str:
@@ -60,7 +82,7 @@ class Review(models.Model):
 
 
 class ProductCategoryLevel1(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True)
     image = models.ImageField(null=True, blank=True)
     banner = models.BooleanField(default=False)
@@ -71,7 +93,7 @@ class ProductCategoryLevel1(models.Model):
 
 
 class ProductCategoryLevel2(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True)
     productType = models.CharField(max_length=255, choices=PRODUCT_TYPE, default=PART)
     parent = models.ForeignKey(
@@ -83,7 +105,7 @@ class ProductCategoryLevel2(models.Model):
 
 
 class ProductCategoryLevel3(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True)
     productType = models.CharField(max_length=255, choices=PRODUCT_TYPE, default=PART)
     parent = models.ForeignKey(
@@ -91,14 +113,4 @@ class ProductCategoryLevel3(models.Model):
     )
 
     def __str__(self) -> str:
-        return self.name
-
-
-class Carousel(models.Model):
-    description = models.TextField(null=True, blank=True)
-    title = models.CharField(null=True, max_length=256, blank=True)
-    image = models.ImageField()
-    name = models.CharField(max_length=256, null=True)
-
-    def __str__(self):
         return self.name

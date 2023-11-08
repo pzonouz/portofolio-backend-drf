@@ -2,12 +2,14 @@ from rest_framework import serializers
 
 from .models import (
     Brand,
-    Carousel,
+    # Carousel,
     Description,
     Product,
     ProductCategoryLevel1,
     ProductCategoryLevel2,
     ProductCategoryLevel3,
+    ProductImage,
+    ProductVideo,
 )
 
 
@@ -17,8 +19,22 @@ class DescriptionSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class ProductImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductImage
+        fields = "__all__"
+
+
+class ProductVideoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductVideo
+        fields = "__all__"
+
+
 class ProductSerializer(serializers.ModelSerializer):
     descriptions = DescriptionSerializer(many=True)
+    images = ProductImageSerializer(many=True)
+    videos = ProductVideoSerializer(many=True)
 
     class Meta:
         model = Product
@@ -28,7 +44,7 @@ class ProductSerializer(serializers.ModelSerializer):
 class ProductsSimpleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ["id", "name", "image"]
+        fields = ["id", "name", "images", "videos"]
 
 
 class ProductCategoryLevel3Serializer(serializers.ModelSerializer):

@@ -15,7 +15,7 @@ from .serializers import (
 )
 from .models import (
     Brand,
-    Carousel,
+    # Carousel,
     Product,
     ProductCategoryLevel1,
     ProductCategoryLevel2,

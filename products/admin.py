@@ -2,12 +2,14 @@ from django.contrib import admin
 
 from .models import (
     Brand,
-    Carousel,
+    # Carousel,
     Product,
     Description,
     ProductCategoryLevel1,
     ProductCategoryLevel2,
     ProductCategoryLevel3,
+    ProductImage,
+    ProductVideo,
     Review,
     Specification,
 )
@@ -53,6 +55,16 @@ class BrandAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Carousel)
-class CarouselAdmin(admin.ModelAdmin):
+# @admin.register(Carousel)
+# class CarouselAdmin(admin.ModelAdmin):
+#     pass
+
+
+@admin.register(ProductImage)
+class ProductImageAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(ProductVideo)
+class ProductVideoAdmin(admin.ModelAdmin):
     pass
