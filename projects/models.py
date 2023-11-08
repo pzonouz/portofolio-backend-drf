@@ -4,7 +4,9 @@ from customers.models import Customer
 
 
 class Project(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
+    image = models.ImageField(null=True)
+    banner = models.BooleanField(default=False)
     customer = models.ForeignKey(
         Customer, on_delete=models.PROTECT, related_name="projects"
     )
@@ -15,7 +17,7 @@ class Project(models.Model):
 
 
 class ProjectImage(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     image = models.ImageField()
     project = models.ForeignKey(
         Project, on_delete=models.PROTECT, related_name="images"

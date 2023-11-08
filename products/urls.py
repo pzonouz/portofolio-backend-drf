@@ -2,12 +2,14 @@ from .views import (
     BannersView,
     BrandView,
     BrandsView,
+    CLassesView,
     CarouselView,
     ClassCategoryLevel1View,
     Level1View,
     Level2View,
     Level3View,
     PartCategoryLevel1View,
+    PartsView,
     ProductView,
     ProductsByBrandView,
     ProductsByL1View,
@@ -15,12 +17,16 @@ from .views import (
     ProductsByL3View,
     ProductsView,
     ServiceCategoryLevel1View,
+    ServicesView,
 )
 
 from django.urls import path
 
 urlpatterns = [
     path("", ProductsView.as_view()),
+    path("parts/", PartsView.as_view()),
+    path("services/", ServicesView.as_view()),
+    path("classes/", CLassesView.as_view()),
     path("by_id/<pk>/", ProductView.as_view()),
     path("by_level3/<id>/", ProductsByL3View.as_view()),
     path("by_level2/<id>/", ProductsByL2View.as_view()),

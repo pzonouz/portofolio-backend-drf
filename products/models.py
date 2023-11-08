@@ -24,11 +24,29 @@ class Product(models.Model):
     carousel = models.BooleanField(default=False)
     productType = models.CharField(max_length=255, choices=PRODUCT_TYPE, default=PART)
     image = models.ImageField(null=True, blank=True)
+    categoryLevel1 = models.ForeignKey(
+        "ProductCategoryLevel1",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="products",
+    )
+    categoryLevel2 = models.ForeignKey(
+        "ProductCategoryLevel2",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="products",
+    )
     categoryLevel3 = models.ForeignKey(
-        "ProductCategoryLevel3", on_delete=models.PROTECT, related_name="products"
+        "ProductCategoryLevel3",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="products",
     )
     brand = models.ForeignKey(
-        Brand, on_delete=models.SET_NULL, null=True, related_name="products"
+        Brand, on_delete=models.SET_NULL, null=True, blank=True, related_name="products"
     )
 
     def __str__(self) -> str:
@@ -109,7 +127,11 @@ class ProductCategoryLevel3(models.Model):
     description = models.TextField(null=True)
     productType = models.CharField(max_length=255, choices=PRODUCT_TYPE, default=PART)
     parent = models.ForeignKey(
-        ProductCategoryLevel2, on_delete=models.PROTECT, related_name="children"
+        ProductCategoryLevel2,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="children",
     )
 
     def __str__(self) -> str:

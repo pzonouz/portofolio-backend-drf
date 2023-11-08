@@ -1,6 +1,9 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
-from rest_framework.views import APIView
-from rest_framework.response import Response
+
+# from rest_framework.views import APIView
+# from rest_framework.response import Response
+from django.db.models import Q
+
 
 from .serializers import (
     BannersSerializer,
@@ -23,8 +26,23 @@ from .models import (
 )
 
 
+class PartsView(ListAPIView):
+    queryset = Product.objects.filter(productType="Pt")
+    serializer_class = ProductsSimpleSerializer
+
+
 class ProductsView(ListAPIView):
     queryset = Product.objects.all()
+    serializer_class = ProductsSimpleSerializer
+
+
+class ServicesView(ListAPIView):
+    queryset = Product.objects.filter(productType="Sr")
+    serializer_class = ProductsSimpleSerializer
+
+
+class CLassesView(ListAPIView):
+    queryset = Product.objects.filter(productType="Cl")
     serializer_class = ProductsSimpleSerializer
 
 
@@ -44,7 +62,10 @@ class ProductsByL2View(ListAPIView):
     serializer_class = ProductsSimpleSerializer
 
     def get_queryset(self):
-        return Product.objects.filter(categoryLevel3__parent__id=self.kwargs["id"])
+        return Product.objects.filter(
+            Q(categoryLevel3__parent__id=self.kwargs["id"])
+            | Q(categoryLevel2__id=self.kwargs["id"])
+        )
 
 
 class ProductsByL1View(ListAPIView):
@@ -52,7 +73,8 @@ class ProductsByL1View(ListAPIView):
 
     def get_queryset(self):
         return Product.objects.filter(
-            categoryLevel3__parent__parent__id=self.kwargs["id"]
+            Q(categoryLevel3__parent__parent__id=self.kwargs["id"])
+            | Q(categoryLevel1__id=self.kwargs["id"])
         )
 
 
